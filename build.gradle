@@ -1,0 +1,57 @@
+buildscript {
+  ext {
+    groovyVersion = '2.4.6'
+    spockVersion = '1.0-groovy-2.4'
+    sl4jVersion = '1.7.12'
+    ratpackVersion = '1.3.3'
+    objenesisVersion = '2.2'
+    cglibVersion = '3.2.2'
+    hystrixVersion = '1.5.2'
+  }
+
+  repositories {
+    mavenLocal()
+    jcenter {
+      url 'http://jcenter.bintray.com/'
+    }
+    maven {
+      url 'http://plugins.gradle.org/m2/'
+    }
+  }
+  dependencies {
+    classpath "io.ratpack:ratpack-gradle:${ratpackVersion}"
+  }
+}
+
+plugins {
+  id 'io.ratpack.ratpack-groovy' version '1.3.3'
+  id 'groovy'
+  id 'java'
+}
+
+wrapper {
+  gradleVersion = 2.13
+}
+
+repositories {
+  mavenLocal()
+  jcenter {
+    url 'http://jcenter.bintray.com/'
+  }
+  maven {
+    url 'http://repo1.maven.org/maven2'
+  }
+}
+
+dependencies {
+  compile "org.slf4j:slf4j-simple:${sl4jVersion}"
+  compile "io.ratpack:ratpack-hystrix:${ratpackVersion}"
+  compile "io.ratpack:ratpack-rx:${ratpackVersion}"
+
+  compile "com.netflix.hystrix:hystrix-core:${hystrixVersion}"
+
+  testCompile "org.spockframework:spock-core:${spockVersion}"
+  testCompile "org.objenesis:objenesis:${objenesisVersion}"
+  testCompile "cglib:cglib:${cglibVersion}"
+}
+

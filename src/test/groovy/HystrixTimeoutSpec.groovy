@@ -1,5 +1,3 @@
-
-
 import com.netflix.hystrix.HystrixCommandGroupKey
 import com.netflix.hystrix.HystrixCommandProperties
 import com.netflix.hystrix.HystrixObservableCommand
@@ -14,7 +12,7 @@ import spock.lang.Specification
 class HystrixTimeoutSpec extends Specification {
   String getPassValue() {
     sleep(10000)
-    return 'pass'
+    'pass'
   }
 
   void 'tryTimeout - ratpack'() {
@@ -29,7 +27,7 @@ class HystrixTimeoutSpec extends Specification {
     end - start < 8000
   }
 
-  void 'tryTimeout - executor service'() {
+  void 'tryTimeout - vanilla rxjava'() {
     when:
     long start = System.currentTimeMillis()
     def actual = runExecutorTest(false)
@@ -48,8 +46,6 @@ class HystrixTimeoutSpec extends Specification {
       new HystrixObservableCommand<String>(
           HystrixObservableCommand.Setter.withGroupKey(
               HystrixCommandGroupKey.Factory.asKey('some-command-group')
-          ).andCommandPropertiesDefaults(
-              HystrixCommandProperties.defaultSetter().withExecutionIsolationStrategy(HystrixCommandProperties.ExecutionIsolationStrategy.SEMAPHORE)
           )) {
 
         @Override
