@@ -43,7 +43,6 @@ class BackendReadTimeoutSpec extends Specification {
     ).respond(
         org.mockserver.model.HttpResponse.response().withConnectionOptions()
             .withDelay(TimeUnit.MILLISECONDS, BACKEND_RESPONSE_DELAY)
-            .withHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON)
             .withBody("pass")
             .withStatusCode(200)
     )

@@ -42,9 +42,10 @@ ratpack {
         }
       }
 
-      Promise<String> result = observableCommand.toObservable().promiseSingle()
+      observableCommand.toObservable().subscribe { next ->
+        render(next)
+      }
 
-      render(result)
     }
   }
 }
