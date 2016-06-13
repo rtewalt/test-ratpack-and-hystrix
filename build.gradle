@@ -7,6 +7,7 @@ buildscript {
     objenesisVersion = '2.2'
     cglibVersion = '3.2.2'
     hystrixVersion = '1.5.2'
+    mockServerClientVersion = '3.10.4'
   }
 
   repositories {
@@ -50,6 +51,7 @@ dependencies {
 
   compile "com.netflix.hystrix:hystrix-core:${hystrixVersion}"
 
+  testCompile "org.mock-server:mockserver-client-java:${mockServerClientVersion}"
   testCompile "org.spockframework:spock-core:${spockVersion}"
   testCompile "org.objenesis:objenesis:${objenesisVersion}"
   testCompile "cglib:cglib:${cglibVersion}"
