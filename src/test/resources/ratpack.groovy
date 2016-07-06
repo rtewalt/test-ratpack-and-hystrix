@@ -1,10 +1,11 @@
 import com.netflix.hystrix.HystrixCommandGroupKey
 import com.netflix.hystrix.HystrixObservableCommand
-import ratpack.exec.Promise
+import ratpack.exec.Execution
 import ratpack.handling.ResponseTimer
 import ratpack.http.client.HttpClient
 import ratpack.http.client.ReceivedResponse
 import rx.Observable
+import ratpack.rx.RxRatpack
 
 import static ratpack.groovy.Groovy.ratpack
 
@@ -25,6 +26,9 @@ ratpack {
                   HystrixCommandGroupKey.Factory.asKey('some-group')
               )
       ) {
+
+        final Execution execution = Execution.current()
+
         @Override
         protected Observable<String> construct() {
           println("Observable Timeout: ${properties.executionTimeoutInMilliseconds().get()}ms")
@@ -38,7 +42,7 @@ ratpack {
         @Override
         protected Observable<String> resumeWithFallback() {
           getExecutionException().printStackTrace()
-          Observable.just(System.getProperty('some.api.backend.fallback'))
+          Observable.just(System.getProperty('some.api.backend.fallback')).observeOn(RxRatpack.scheduler(execution.controller))
         }
       }
 
